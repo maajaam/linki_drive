@@ -1,6 +1,6 @@
 # Linki Drive
 
-Media player controller for Home Assistant.
+Media player controller for Home Assistant based on ESP32 and PN532 NFC tag reader.
 
 ![Linki Drive](images/linki_drive.jpg)
 
