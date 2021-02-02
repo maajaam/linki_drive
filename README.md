@@ -18,6 +18,32 @@ The device is based on ESP32, includes sensors for touch, LED feedback and rotar
 
 Linki Drive is open hardware project. All degrees of freedom allowed!
 
+# Components
+
+The electronics of Linki Drive are simple and based on off-the-shelf components. To create a physically stable device, it is adviced to buy or manufacture the PCB.
+
+To build Linki Drive you will need:
+
+## Electronics
+
+* [ESP32]
+* [PN532 NFC reader](https://www.aliexpress.com/item/32794353925.html)
+* RGB LED
+* rotary encoder
+* custom PCB
+* LiPo battery 
+* Battery holder
+
+## Materials
+
+* M6 bolts or similar
+* plastic washers
+* M6 nuts
+* M6 washers
+* 6mm plywood
+* wood glue
+* paint, oil, wax etc
+
 # Author
 
-Artist Timo Toots created the format after designing a museum exhibit based on floppy discs. It has been used for media player purposes in his home since 2017. The project is opening this idea up for anybody interested.
+Artist Timo Toots created the format after designing a museum exhibit based on floppy discs. It has been used for media player purposes in his home since 2017. The project is opening this idea up for anybody interested. Latest advancements in Home Assistant software has made it possible to easily integrate it with any media player.
