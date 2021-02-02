@@ -26,7 +26,7 @@ To build Linki Drive you will need:
 
 ## Electronics
 
-* [ESP32]
+* ESP32 board
 * [PN532 NFC reader](https://www.aliexpress.com/item/32794353925.html)
 * RGB LED
 * rotary encoder
