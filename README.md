@@ -2,7 +2,7 @@
 
 Media player controller for [Home Assistant](https://www.home-assistant.io/) based on ESP32 and PN532 NFC tag reader.
 
-![Linkibox](images/linki_drive.jpg)
+![Linkibox](images/linkibox.jpg)
 
 Linkibox is a media player controller for Linkis.
 
