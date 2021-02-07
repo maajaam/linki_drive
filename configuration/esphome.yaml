@@ -1,0 +1,178 @@
+esphome:
+  name: linkidrive
+  platform: ESP32
+  board: lolin_d32
+  # If buzzer is enabled, notify on api connection success
+  on_boot:
+      priority: -10
+      then:
+      - wait_until:
+          api.connected:
+      - logger.log: "API is connected!"
+      - rtttl.play: "success:d=24,o=5,b=100:c,g,b"
+      - output.turn_on: pot_out
+wifi:
+  ssid: ""
+  password: ""
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: ${devicename}
+
+captive_portal:
+
+# Enable logging
+logger:
+
+
+
+substitutions:
+  devicename: linkidrive
+  friendly_name: LinkiDrive
+
+
+
+# Define switches to control LED and buzzer from HA
+switch:
+- platform: template
+  name: "${friendly_name} Buzzer Enabled"
+  id: buzzer_enabled
+  icon: mdi:volume-high
+  optimistic: true
+- platform: template
+  name: "${friendly_name} LED enabled"
+  id: led_enabled
+  icon: mdi:alarm-light-outline
+  optimistic: true
+
+
+# Enable Home Assistant API
+api:
+  services:
+  - service: rfidreader_tag_ok
+    then:
+    - rtttl.play: "beep:d=16,o=5,b=100:b"
+
+  - service: rfidreader_tag_ko
+    then:
+    - rtttl.play: "beep:d=8,o=5,b=100:b"
+
+  - service: play_rtttl
+    variables:
+      song_str: string
+    then:
+    - rtttl.play: !lambda 'return song_str;'
+
+# Enable OTA upgrade
+ota:
+
+# Enable SPI interface
+spi:
+  clk_pin: 18
+  miso_pin: 19
+  mosi_pin: 23
+
+# Configure the PN532 module
+pn532:
+  cs_pin: 5
+  update_interval: 2s
+
+  # What happens when a tag is read
+  on_tag:
+    then:
+    - homeassistant.tag_scanned: !lambda 'return x;'
+    - if:
+        condition:
+          switch.is_on: buzzer_enabled
+        then:
+        - rtttl.play: "success:d=24,o=5,b=100:c,g,b"
+    - if:
+        condition:
+          switch.is_on: led_enabled
+        then:
+        - light.turn_on:
+            id: activity_led
+            brightness: 100%
+            red: 0%
+            green: 100%
+            blue: 0%
+            flash_length: 500ms
+
+# Define the buzzer output
+output:
+- platform: ledc
+  pin: 0
+  id: buzzer
+- platform: ledc
+  id: led_r
+  pin: 27
+- platform: ledc
+  id: led_g
+  pin: 14    
+- platform: ledc
+  id: led_b
+  pin: 26   
+- platform: gpio
+  pin: 25
+  id: pot_out
+    
+# Define buzzer as output for RTTTL
+rtttl:
+  output: buzzer
+
+# Configure LED
+light:
+- platform: rgb
+  red: led_r
+  green: led_g
+  blue: led_b
+  id: activity_led
+  name: "${friendly_name} LED"
+  restore_mode: ALWAYS_OFF
+
+
+    
+sensor:
+  - platform: adc
+    pin: 36
+    attenuation: "11db"
+    name: "${friendly_name} VOL"
+    unit_of_measurement: "%"
+    filters:
+      - calibrate_linear:
+          # Map 0.0 (from sensor) to 0.0 (true value)
+          - 0.0 -> 100
+          - 3.9 -> 0
+    accuracy_decimals: 0
+    update_interval: 3s
+    
+    
+ # Example configuration entry
+esp32_touch:
+  setup_mode: False
+
+binary_sensor:
+  - platform: esp32_touch
+    name: "${friendly_name} PREV"
+    pin: 4
+    threshold: 500  
+  - platform: esp32_touch
+    name: "${friendly_name} NEXT"
+    pin: 2
+    threshold: 500  
+  - platform: esp32_touch
+    name: "${friendly_name} RANDOM"
+    pin: 15
+    threshold: 500  
+  - platform: esp32_touch
+    name: "${friendly_name} PAUSE"
+    pin: 32
+    threshold: 500  
+  - platform: esp32_touch
+    name: "${friendly_name} LIKE"
+    pin: 12
+    threshold: 500  
+  - platform: esp32_touch
+    name: "${friendly_name} REC"
+    pin: 13
+    threshold: 500  

@@ -1,0 +1,31 @@
+blueprint:
+  name: Linki Drive player
+  description: Play any NFC URL in media player
+  domain: automation
+  input:
+    media_player:
+      name: Media Player
+      description: This media player will be used for playing.
+      selector:
+        entity:
+          domain: media_player
+    linki_drive:
+      name: Linki Drive device
+      description: The device to read NFC tags
+      selector:
+        target:
+          entity:
+            domain: tag_reader
+
+trigger:
+  platform: state
+  entity_id: !input media_player
+
+action:
+  service: >
+    {% if trigger.to_state.state == "on" %}
+      light.turn_on
+    {% else %}
+      light.turn_off
+    {% endif %}
+  target: !input linki_drive
