@@ -1,10 +1,10 @@
-# Linki Drive - NFC Media Player
+# Linkibox - NFC Media Player
 
 Media player controller for [Home Assistant](https://www.home-assistant.io/) based on ESP32 and PN532 NFC tag reader.
 
-![Linki Drive](images/linki_drive.jpg)
+![Linkibox](images/linki_drive.jpg)
 
-Linki Drive is a media player controller for Linkis.
+Linkibox is a media player controller for Linkis.
 
 # What's a linki?
 
@@ -12,17 +12,17 @@ Linki is an open format that specifies the size, shape and position of NFC tag t
 
 [Website of the Linki project](https://www.linki.cc)
 
-# Linki Drive
+# Linkibox
 
 The device is based on ESP32, includes sensors for touch, LED feedback and rotary encoder for volume control. The device is battery powered and chargable over micro USB port.
 
-Linki Drive is open hardware project. All degrees of freedom allowed!
+Linkibox is open hardware project. All degrees of freedom allowed!
 
 # Components
 
-The electronics of Linki Drive are simple and based on off-the-shelf components. To create a physically stable device, it is adviced to buy or manufacture the PCB.
+The electronics of Linkibox are simple and based on off-the-shelf components. To create a physically stable device, it is adviced to buy or manufacture the PCB.
 
-To build Linki Drive you will need:
+To build Linkibox you will need:
 
 ## Electronics
 
